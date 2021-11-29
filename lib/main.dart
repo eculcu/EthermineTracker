@@ -7,8 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await CurrentStatNotifier().initialize();
+  //WidgetsFlutterBinding.ensureInitialized();
+  //await CurrentStatNotifier().initialize();
   runApp(MyApp());
 }
 

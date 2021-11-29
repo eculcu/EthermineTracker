@@ -1,4 +1,3 @@
-import 'package:admin/models/MyFiles.dart';
 import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/models/CurrentStat.dart';
@@ -9,6 +8,7 @@ import '../../../constants.dart';
 import 'file_info_card.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
+import 'package:loading_animations/loading_animations.dart';
 
 class MyMiners extends StatelessWidget {
   const MyMiners({Key? key}) : super(key: key);
@@ -22,6 +22,7 @@ class MyMiners extends StatelessWidget {
 class MyMinerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var isReady = Provider.of<CurrentStatNotifier>(context).getIsReady();
     var widgetList = <Widget>[];
     widgetList.add(Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,36 +48,41 @@ class MyMinerList extends StatelessWidget {
         ),
       ],
     ));
-    widgetList.add(Row(children: [
-      Container(
-          padding: EdgeInsets.all(defaultPadding),
-          decoration: BoxDecoration(
-            color: secondaryColor,
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Text('Etherium'),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                      Provider.of<CurrentStatNotifier>(context)
-                              .getEthPrice()
-                              .toStringAsFixed(1) +
-                          ' USD',
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                ],
-              )
-            ],
-          ))
-    ]));
-    var list = Provider.of<CurrentStatNotifier>(context).getWalletList();
-    for (var i = 0; i < list.length; i++) {
-      widgetList.add(SizedBox(height: defaultPadding));
-      widgetList.add(MyMinerContainer(i));
+    if (isReady == false) {
+      widgetList.add(LoadingBouncingGrid.circle());
+      Provider.of<CurrentStatNotifier>(context, listen: false).initialize();
+    } else {
+      widgetList.add(Row(children: [
+        Container(
+            padding: EdgeInsets.all(defaultPadding),
+            decoration: BoxDecoration(
+              color: secondaryColor,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text('Etherium'),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                        Provider.of<CurrentStatNotifier>(context)
+                                .getEthPrice()
+                                .toStringAsFixed(1) +
+                            ' USD',
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ],
+                )
+              ],
+            ))
+      ]));
+      var list = Provider.of<CurrentStatNotifier>(context).getWalletList();
+      for (var i = 0; i < list.length; i++) {
+        widgetList.add(SizedBox(height: defaultPadding));
+        widgetList.add(MyMinerContainer(i));
+      }
     }
     return Column(children: widgetList);
   }
@@ -92,11 +98,7 @@ class MyMinerContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () {
-        Provider.of<CurrentStatNotifier>(context, listen: false)
-            .deleteWalletId(walletIdx);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Wallet Id was deleted"),
-        ));
+        showAlertDialog(context);
       },
       child: Container(
           padding: EdgeInsets.all(defaultPadding),
@@ -166,6 +168,45 @@ class MyMinerContainer extends StatelessWidget {
                       ' USD')
             ],
           )),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Continue"),
+      onPressed: () {
+        Provider.of<CurrentStatNotifier>(context, listen: false)
+            .deleteWalletId(walletIdx);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Wallet Id was deleted"),
+        ));
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Delete Wallet Id"),
+      content: Text("Would you like to continue to delete this wallet id?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

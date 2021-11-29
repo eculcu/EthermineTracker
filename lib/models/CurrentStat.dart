@@ -42,6 +42,7 @@ class CurrentStatNotifier with ChangeNotifier {
   static List<CurrentStat> _stats = [];
   static double _ethPrice = 0;
   static HttpEthermineService service = HttpEthermineService();
+  static bool _isReady = false;
   Future<void> initialize() async {
     await service.getPoolStats().then((Map<String, dynamic> value) {
       _ethPrice = double.parse(value['price']['usd'].toString());
@@ -57,10 +58,15 @@ class CurrentStatNotifier with ChangeNotifier {
             .getCurrentStats(walletId)
             .then((Map<String, dynamic> value) {
           _stats.add(CurrentStat.fromJson(value, walletId, _ethPrice));
-          notifyListeners();
         });
       }
+      _isReady = true;
+      notifyListeners();
     }
+  }
+
+  bool getIsReady() {
+    return _isReady;
   }
 
   CurrentStat getStat(int idx) {
