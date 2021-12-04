@@ -49,7 +49,8 @@ class MyMinerList extends StatelessWidget {
       ],
     ));
     if (isReady == false) {
-      widgetList.add(LoadingBouncingGrid.circle());
+      widgetList.add(CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.amber)));
       Provider.of<CurrentStatNotifier>(context, listen: false).initialize();
     } else {
       widgetList.add(Row(children: [

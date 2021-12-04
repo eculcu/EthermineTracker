@@ -1,5 +1,6 @@
 import 'package:admin/constants.dart';
 import 'package:admin/controllers/MenuController.dart';
+import 'package:admin/models/CurrentStat.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/components/add_miner.dart';
 import 'package:admin/screens/dashboard/dashboard_screen.dart';

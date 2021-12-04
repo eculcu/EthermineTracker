@@ -16,25 +16,25 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => CurrentStatNotifier(),
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Admin Panel',
-          theme: ThemeData.dark().copyWith(
-            scaffoldBackgroundColor: bgColor,
-            textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
-                .apply(bodyColor: Colors.white),
-            canvasColor: secondaryColor,
-          ),
-          home: MultiProvider(
-            providers: [
-              ChangeNotifierProvider(
-                create: (context) => MenuController(),
-              ),
-            ],
-            child: MainScreen(),
-          ),
-        ));
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CurrentStatNotifier>(
+            create: (context) => CurrentStatNotifier()),
+        ChangeNotifierProvider(
+          create: (context) => MenuController(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Admin Panel',
+        theme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: bgColor,
+          textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
+              .apply(bodyColor: Colors.white),
+          canvasColor: secondaryColor,
+        ),
+        home: MainScreen(),
+      ),
+    );
   }
 }
