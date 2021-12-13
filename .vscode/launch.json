@@ -5,28 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(lldb) Başlat",
-            "type": "cppdbg",
+            "name": "Flutter",
+            "type": "dart",
             "request": "launch",
-            "program": "Program adını girin, örneğin: ${workspaceFolder}/a.out",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "lldb"
-        },
-        {
-            "name": "(lldb) Başlat",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "Program adını girin, örneğin: ${workspaceFolder}/a.out",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${fileDirname}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "lldb"
+            "program": "lib/main.dart"
         }
     ]
 }

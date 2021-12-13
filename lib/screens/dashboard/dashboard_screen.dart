@@ -1,5 +1,5 @@
-import 'package:admin/responsive.dart';
-import 'package:admin/screens/dashboard/components/my_miners.dart';
+import 'package:ethermine_tracker/responsive.dart';
+import 'package:ethermine_tracker/screens/dashboard/components/my_miners.dart';
 import 'package:flutter/material.dart';
 
 import '../../constants.dart';

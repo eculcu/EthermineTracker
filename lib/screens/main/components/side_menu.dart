@@ -1,6 +1,6 @@
-import 'package:admin/screens/dashboard/components/add_miner.dart';
-import 'package:admin/screens/dashboard/components/settings.dart';
-import 'package:admin/screens/main/main_screen.dart';
+import 'package:ethermine_tracker/screens/dashboard/components/add_miner.dart';
+import 'package:ethermine_tracker/screens/dashboard/components/settings.dart';
+import 'package:ethermine_tracker/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

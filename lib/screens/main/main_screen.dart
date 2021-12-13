@@ -1,9 +1,9 @@
-import 'package:admin/constants.dart';
-import 'package:admin/controllers/MenuController.dart';
-import 'package:admin/models/CurrentStat.dart';
-import 'package:admin/responsive.dart';
-import 'package:admin/screens/dashboard/components/add_miner.dart';
-import 'package:admin/screens/dashboard/dashboard_screen.dart';
+import 'package:ethermine_tracker/constants.dart';
+import 'package:ethermine_tracker/controllers/MenuController.dart';
+import 'package:ethermine_tracker/models/CurrentStat.dart';
+import 'package:ethermine_tracker/responsive.dart';
+import 'package:ethermine_tracker/screens/dashboard/components/add_miner.dart';
+import 'package:ethermine_tracker/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,12 +1,12 @@
-import 'package:admin/constants.dart';
-import 'package:admin/controllers/MenuController.dart';
-import 'package:admin/models/CurrentStat.dart';
-import 'package:admin/responsive.dart';
-import 'package:admin/screens/main/components/side_menu.dart';
+import 'package:ethermine_tracker/constants.dart';
+import 'package:ethermine_tracker/controllers/MenuController.dart';
+import 'package:ethermine_tracker/models/CurrentStat.dart';
+import 'package:ethermine_tracker/responsive.dart';
+import 'package:ethermine_tracker/screens/main/components/side_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/src/provider.dart';
-import 'package:admin/constants.dart';
+import 'package:ethermine_tracker/constants.dart';
 
 class AddMiner extends StatelessWidget {
   const AddMiner({Key? key}) : super(key: key);

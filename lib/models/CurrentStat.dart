@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -99,6 +100,37 @@ class CurrentStatNotifier with ChangeNotifier {
       _stats[idx] = CurrentStat.fromJson(value, walletId, _ethPrice);
       notifyListeners();
     });
+  }
+
+  void getNotificationBody() async {
+    await service.getPoolStats().then((Map<String, dynamic> value) {
+      _ethPrice = double.parse(value['price']['usd'].toString());
+    });
+    double totalUsd = 0;
+    double totalHash = 0;
+    for (var i = 0; i < _walletList.length; i++) {
+      await service
+          .getCurrentStats(_walletList[i])
+          .then((Map<String, dynamic> value) {
+        totalUsd +=
+            double.parse(value['unpaid'].toString()) / 10e17 * _ethPrice;
+        totalHash +=
+            double.parse(value['reportedHashrate'].toString()) / 1000000;
+      });
+    }
+    String ntBody = 'Unpaid Total Balance ' +
+        totalUsd.toStringAsFixed(5) +
+        ' USD\n' +
+        'Total Hashrate ' +
+        totalHash.toStringAsFixed(1) +
+        ' Mh/s';
+
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 10,
+            channelKey: 'basic_channel',
+            title: 'Current Status',
+            body: ntBody));
   }
 
   List<String> getWalletList() {
